@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
- import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -52,16 +52,16 @@ class App extends Component {
   }
 
   startClock() {
-    this.setState({isRunning: true});    
+    this.setState({ isRunning: true });
     this.intervalHandle = setInterval(this.tick, 1000);
     // let time = this.state.minutes;
     this.secondsRemaining = this.calculateTime();
     this.tickSound = new Audio('tick.mp3');
-    
+
   }
 
   stopClock(withAlarm) {
-    this.setState({isRunning: false});
+    this.setState({ isRunning: false });
     clearInterval(this.intervalHandle);
     if (withAlarm) {
       console.log('ring!');
@@ -77,22 +77,33 @@ class App extends Component {
           <p>Random Timer - BRandom!</p>
           {/*  */}
           {/* Timer */}
-          <label>
-            From:
-          <input onChange={this.handleMinChange} type="number" name="name" />
-          </label>
-          <label>
-            To:
-          <input onChange={this.handleMaxChange} type="number" name="name" />
+
+
+          {/* <input onChange={this.handleMinChange} type="number" name="name" /> */}
+          <label for="inp" class="inp">
+            <input onChange={this.handleMinChange} type="text" id="inp" placeholder="&nbsp;" type="number" />
+            <span class="label">From</span>
+            <span class="border"></span>
+
           </label>
 
-          <button onClick={this.startCountDown} >Start</button>
+          <label for="inp" class="inp">
+            <input type="text" id="inp" onChange={this.handleMaxChange} placeholder="&nbsp;" type="number" />
+            <span class="label">To</span>
+            <span class="border"></span>
+          </label>
+          {/* <label>
+            To:
+          <input onChange={this.handleMaxChange} type="number" name="name" />
+          </label> */}
+          <div onClick={this.startCountDown} class='button -regular center'>Start</div>
+          {/* <button onClick={this.startCountDown} >Start</button> */}
         </header>
       </div>
     );
   }
 
-  tick() {    
+  tick() {
     if (this.secondsRemaining <= 0) {
       this.stopClock(true);
       var audio = new Audio('kaboom.mp3');
@@ -102,7 +113,7 @@ class App extends Component {
       this.tickSound.play();
       this.secondsRemaining--
       console.log(this.secondsRemaining);
-    }    
+    }
   }
 
 
