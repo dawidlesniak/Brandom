@@ -32,9 +32,15 @@ class App extends Component {
   }
 
   calculateTime() {
-    const min = this.state.minValue;
 
+    const min = this.state.minValue;
     const max = this.state.maxValue + 1;
+
+    if(min > max){
+      alert('From value needs to be smaller than To value.');
+    } else if (max < 5){
+      alert('Try to increase To value');
+    }
 
     var rand = Math.floor(Math.random() * (max - min)) + min
     console.log(rand);
@@ -60,13 +66,9 @@ class App extends Component {
 
   }
 
-  stopClock(withAlarm) {
+  stopClock() {
     this.setState({ isRunning: false });
-    clearInterval(this.intervalHandle);
-    if (withAlarm) {
-      console.log('ring!');
-    }
-    console.log('end');
+    clearInterval(this.intervalHandle);    
   }
 
   render() {
@@ -105,7 +107,7 @@ class App extends Component {
 
   tick() {
     if (this.secondsRemaining <= 0) {
-      this.stopClock(true);
+      this.stopClock();
       var audio = new Audio('kaboom.mp3');
       audio.play();
       // clearInterval(this.intervalHandle);      
