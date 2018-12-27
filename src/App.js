@@ -31,17 +31,7 @@ class App extends Component {
     // this.setState({ maxValue: event.target.value });
   }
 
-  calculateTime() {
-
-    const min = this.state.minValue;
-    const max = this.state.maxValue + 1;
-
-    if(min > max){
-      alert('From value needs to be smaller than To value.');
-    } else if (max < 5){
-      alert('Try to increase To value');
-    }
-
+  calculateTime(min, max) {
     var rand = Math.floor(Math.random() * (max - min)) + min
     console.log(rand);
     return rand;
@@ -53,15 +43,25 @@ class App extends Component {
       this.stopClock();
     } else {
       console.log('starting');
-      this.startClock();
+      const min = this.state.minValue;
+      const max = this.state.maxValue + 1;
+  
+      if(min > max){
+        alert('From value needs to be smaller than To value.');
+        return;
+      } else if (max < 5){
+        alert('Try to increase To value');
+        return;
+      }
+      this.startClock(min, max);
     }
   }
 
-  startClock() {
+  startClock(min, max) {
     this.setState({ isRunning: true });
     this.intervalHandle = setInterval(this.tick, 1000);
     // let time = this.state.minutes;
-    this.secondsRemaining = this.calculateTime();
+    this.secondsRemaining = this.calculateTime(min, max);
     this.tickSound = new Audio('tick.mp3');
 
   }
@@ -82,23 +82,23 @@ class App extends Component {
 
 
           {/* <input onChange={this.handleMinChange} type="number" name="name" /> */}
-          <label for="inp" class="inp">
-            <input onChange={this.handleMinChange} type="text" id="inp" placeholder="&nbsp;" type="number" />
-            <span class="label">From</span>
-            <span class="border"></span>
+          <label className="inp">
+            <input onChange={this.handleMinChange} id="inp" placeholder="&nbsp;" type="number" />
+            <span className="label">From</span>
+            <span className="border"></span>
 
           </label>
 
-          <label for="inp" class="inp">
-            <input type="text" id="inp" onChange={this.handleMaxChange} placeholder="&nbsp;" type="number" />
-            <span class="label">To</span>
-            <span class="border"></span>
+          <label className="inp">
+            <input id="inp" onChange={this.handleMaxChange} placeholder="&nbsp;" type="number" />
+            <span className="label">To</span>
+            <span className="border"></span>
           </label>
           {/* <label>
             To:
           <input onChange={this.handleMaxChange} type="number" name="name" />
           </label> */}
-          <div onClick={this.startCountDown} class='button -regular center'>Start</div>
+          <div onClick={this.startCountDown} className='button -regular center'>Start</div>
           {/* <button onClick={this.startCountDown} >Start</button> */}
         </header>
       </div>
@@ -117,39 +117,6 @@ class App extends Component {
       console.log(this.secondsRemaining);
     }
   }
-
-
-  // foo() {
-  //   var countDownDate = new Date("Jan 5, 2019 15:37:25").getTime();
-
-  //   // Update the count down every 1 second
-  //   var x = setInterval(function () {
-
-  //     // Get todays date and time
-  //     var now = new Date().getTime();
-
-  //     // Find the distance between now and the count down date
-  //     var distance = countDownDate - now;
-
-  //     // Time calculations for days, hours, minutes and seconds
-  //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  //     // Output the result in an element with id="demo"
-  //     document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  //       + minutes + "m " + seconds + "s ";
-
-  //     // If the count down is over, write some text 
-  //     if (distance < 0) {
-  //       clearInterval(x);
-  //       document.getElementById("demo").innerHTML = "EXPIRED";
-  //     }
-  //   }, 1000);
-  // }
-
 }
-
 
 export default App;
